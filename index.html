@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        /* Mengatur background dan tampilan umum */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #add8e6; /* Warna biru muda */
+            background-color: #add8e6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
-        /* Kotak login */
         .login-container {
             background: white;
             padding: 20px 30px;
@@ -26,14 +23,10 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 300px;
         }
-
-        /* Elemen judul */
         .login-container h1 {
             margin-bottom: 20px;
             font-size: 24px;
         }
-
-        /* Input, tombol, dan label */
         input[type="text"], button {
             display: block;
             width: 100%;
@@ -43,13 +36,10 @@
             border-radius: 5px;
             font-size: 16px;
         }
-
-        /* Checkbox dan radio button */
         .checkbox-container {
             text-align: left;
             margin: 10px 0;
         }
-
         button {
             background-color: #007bff;
             color: white;
@@ -57,16 +47,13 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:disabled {
-            background-color: #ccc; /* Warna tombol jika dinonaktifkan */
+            background-color: #ccc;
             cursor: not-allowed;
         }
-
         button:hover:enabled {
             background-color: #0056b3;
         }
-
         .section-title {
             text-align: left;
             font-weight: bold;
@@ -78,11 +65,8 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <form action="welcom h.html" method="GET" id="loginForm">
-            <!-- Input nama -->
+        <form id="loginForm">
             <input type="text" name="name" id="name" placeholder="Masukkan nama" required>
-
-            <!-- Apakah Anda Guru atau Murid? -->
             <div class="checkbox-container">
                 <div class="section-title">Anda adalah?</div>
                 <label>
@@ -93,8 +77,6 @@
                     <input type="radio" name="role" value="murid" id="murid"> Saya Murid
                 </label>
             </div>
-
-            <!-- Pilihan Kelas -->
             <div class="checkbox-container" id="kelasSection">
                 <div class="section-title">Kelas berapakah Anda?</div>
                 <label><input type="checkbox" name="kelas" value="Kelas 7" id="kelas7"> Kelas 7</label>
@@ -103,9 +85,7 @@
                 <br>
                 <label><input type="checkbox" name="kelas" value="Kelas 9" id="kelas9"> Kelas 9</label>
             </div>
-
-            <!-- Tombol Masuk -->
-            <button type="submit" id="submitButton" disabled>Masuk</button>
+            <button type="button" id="submitButton" disabled>Masuk</button>
         </form>
     </div>
 
@@ -116,30 +96,38 @@
         const submitButton = document.getElementById('submitButton');
         const kelasSection = document.getElementById('kelasSection');
 
-        // Fungsi untuk memeriksa apakah form valid
         function validateForm() {
             const nameFilled = nameInput.value.trim() !== '';
             const isGuru = document.getElementById('guru').checked;
             const isMurid = document.getElementById('murid').checked;
             const kelasSelected = Array.from(kelasInputs).some(input => input.checked);
 
-            // Jika Guru dipilih, kelas tidak diperlukan
             if (isGuru) {
-                kelasSection.style.display = 'none'; // Sembunyikan bagian kelas
+                kelasSection.style.display = 'none';
                 submitButton.disabled = !nameFilled;
             } else if (isMurid) {
-                kelasSection.style.display = 'block'; // Tampilkan bagian kelas
+                kelasSection.style.display = 'block';
                 submitButton.disabled = !(nameFilled && kelasSelected);
             } else {
-                kelasSection.style.display = 'none'; // Default, sembunyikan bagian kelas
+                kelasSection.style.display = 'none';
                 submitButton.disabled = true;
             }
         }
 
-        // Event listeners untuk memvalidasi form
         nameInput.addEventListener('input', validateForm);
         roleInputs.forEach(input => input.addEventListener('change', validateForm));
         kelasInputs.forEach(input => input.addEventListener('change', validateForm));
+
+        submitButton.addEventListener('click', () => {
+            const isGuru = document.getElementById('guru').checked;
+            const isMurid = document.getElementById('murid').checked;
+
+            if (isGuru) {
+                window.location.href = "guru.html"; // Halaman untuk Guru
+            } else if (isMurid) {
+                window.location.href = "murid.html"; // Halaman untuk Murid
+            }
+        });
     </script>
 </body>
 </html>
