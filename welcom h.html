@@ -43,6 +43,10 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        audio {
+            display: none; /* Sembunyikan kontrol audio */
+        }
     </style>
 </head>
 <body>
@@ -56,6 +60,12 @@
         </a>
     </div>
 
+    <!-- Pemutar lagu otomatis -->
+    <audio id="background-music" autoplay loop>
+        <source src="lagu.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung pemutar audio.
+    </audio>
+
     <script>
         // Ambil parameter "name" dari URL
         const params = new URLSearchParams(window.location.search);
@@ -63,6 +73,14 @@
 
         // Tampilkan nama di halaman
         document.getElementById('userName').textContent = name || 'Pengguna';
+
+        // Pemutaran musik fallback (untuk kebijakan browser yang membatasi autoplay)
+        const audio = document.getElementById('background-music');
+        document.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+            }
+        });
     </script>
 </body>
 </html>
