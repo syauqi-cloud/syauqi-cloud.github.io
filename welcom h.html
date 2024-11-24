@@ -38,14 +38,19 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
-        audio {
-            display: none; /* Sembunyikan kontrol audio */
+        .music-button {
+            background-color: #28a745;
+        }
+
+        .music-button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -54,14 +59,17 @@
         <h1>Selamat Datang!</h1>
         <p>Halo, <span id="userName"></span>! Senang bertemu dengan Anda.</p>
 
-        <!-- Tombol untuk kembali ke halaman login -->
+        <!-- Tombol untuk memutar atau menghentikan lagu -->
+        <button id="musicToggle" class="music-button">Putar Lagu</button>
+
+        <!-- Tombol untuk masuk ke halaman utama -->
         <a href="first page.html">
             <button>Masuk ke Halaman Utama</button>
         </a>
     </div>
 
-    <!-- Pemutar lagu otomatis -->
-    <audio id="background-music" autoplay loop>
+    <!-- Pemutar lagu -->
+    <audio id="background-music">
         <source src="lagu.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung pemutar audio.
     </audio>
@@ -74,11 +82,20 @@
         // Tampilkan nama di halaman
         document.getElementById('userName').textContent = name || 'Pengguna';
 
-        // Pemutaran musik fallback (untuk kebijakan browser yang membatasi autoplay)
+        // Fungsi untuk memutar atau menghentikan lagu
         const audio = document.getElementById('background-music');
-        document.addEventListener('click', () => {
+        const musicButton = document.getElementById('musicToggle');
+
+        musicButton.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
+                musicButton.textContent = 'Hentikan Lagu';
+                musicButton.classList.remove('music-button');
+                musicButton.classList.add('music-button-stop');
+            } else {
+                audio.pause();
+                musicButton.textContent = 'Putar Lagu';
+                musicButton.classList.add('music-button');
             }
         });
     </script>
